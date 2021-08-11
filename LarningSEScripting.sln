@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrillSpeedToggle", "DrillSp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAirlock", "SimpleAirlock\SimpleAirlock.csproj", "{678FC27B-55C0-4C65-953B-478160C076B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestScript", "TestScript\TestScript.csproj", "{F3E8564E-EA6B-4174-8582-04570884416E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -16,6 +18,8 @@ Global
 		{BB483D55-8EE4-412B-838B-57EF7B276416}.Debug|x64.Build.0 = Debug|x64
 		{678FC27B-55C0-4C65-953B-478160C076B3}.Debug|x64.ActiveCfg = Debug|x64
 		{678FC27B-55C0-4C65-953B-478160C076B3}.Debug|x64.Build.0 = Debug|x64
+		{F3E8564E-EA6B-4174-8582-04570884416E}.Debug|x64.ActiveCfg = Debug|x64
+		{F3E8564E-EA6B-4174-8582-04570884416E}.Debug|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
