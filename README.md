@@ -1,5 +1,5 @@
 # SpaceEngineersScripts
-A small collection of the Space Engineers Scripts I've written for my private game
+A small collection of the Space Engineers Scripts I've written for my private game using https://github.com/malware-dev/MDK-SE
 
 ## Airlock Script
 Simple airlock script supporting a two way, lossless passage. Airlocks must consist out of two doors, a vent and sensor inside the airlock.
