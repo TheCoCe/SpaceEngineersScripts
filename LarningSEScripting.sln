@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAirlock", "SimpleAirl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestScript", "TestScript\TestScript.csproj", "{F3E8564E-EA6B-4174-8582-04570884416E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMiningManager", "SimpleMiningManager\SimpleMiningManager.csproj", "{5E0E450C-E99A-43DF-9ADE-4C3973299C70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionManager", "ActionManager\ActionManager.csproj", "{E3E5F244-E9C3-4B12-BF5F-BA8BB0C4ADB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -20,6 +24,10 @@ Global
 		{678FC27B-55C0-4C65-953B-478160C076B3}.Debug|x64.Build.0 = Debug|x64
 		{F3E8564E-EA6B-4174-8582-04570884416E}.Debug|x64.ActiveCfg = Debug|x64
 		{F3E8564E-EA6B-4174-8582-04570884416E}.Debug|x64.Build.0 = Debug|x64
+		{5E0E450C-E99A-43DF-9ADE-4C3973299C70}.Debug|x64.ActiveCfg = Debug|x64
+		{5E0E450C-E99A-43DF-9ADE-4C3973299C70}.Debug|x64.Build.0 = Debug|x64
+		{E3E5F244-E9C3-4B12-BF5F-BA8BB0C4ADB0}.Debug|x64.ActiveCfg = Debug|x64
+		{E3E5F244-E9C3-4B12-BF5F-BA8BB0C4ADB0}.Debug|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
