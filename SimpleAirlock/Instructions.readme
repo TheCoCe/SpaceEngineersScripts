@@ -1,6 +1,8 @@
 ﻿R e a d m e
 -----------
 
+Simple Airlock by TheCoCe
+
 Simple airlock script supporting a two way, lossless passage. Airlocks must consist out of two doors, a vent and sensor inside the airlock.
 The Scripts also support two optional vertical 'Corner LCD Flat' Screens for airlock status.
 

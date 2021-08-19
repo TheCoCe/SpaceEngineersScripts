@@ -1,5 +1,10 @@
 ﻿R e a d m e
 -----------
 
-In this file you can include any instructions or other comments you want to have injected onto the 
-top of your final script. You can safely delete this file if you do not want any such comments.
+Action Manager by TheCoCe
+The action manager script is a simple way to program simple action sequences without the need for timer blocks. 
+The script supports multiple sequences per programmable block that you can run via the agruments of the block. 
+You can execute any action you can execute via the terminal and set or check properties of the block or group.
+
+For a detailed explanation on how to use the script check:
+https://github.com/TheCoCe/SpaceEngineersScripts#action-manager
