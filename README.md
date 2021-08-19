@@ -2,16 +2,13 @@
 A small collection of the Space Engineers Scripts I've written for my private game using https://github.com/malware-dev/MDK-SE
 
 ## Airlock Script
-___
 Simple airlock script supporting a two way, lossless passage. Airlocks must consist out of two doors, a vent and sensor inside the airlock.
 The Scripts also support two optional vertical 'Corner LCD Flat' Screens for airlock status.
 
 ## Drill Speed Toggle
-___
 Simple script for automating piston drill operation. The Script checks the current input and adjusts the piston speed to match the drill load.
 
 ## Action Manager
-___
 The action manager script is a simple way to program simple action sequences without the need for timer blocks. The script supports multiple sequences per programmable block that you can run via the agruments of the block. You can execute any action you can execute via the terminal and set or check properties of the block or group. 
 
 ### Commands:
@@ -27,25 +24,25 @@ Using those with just the Block argument will print the possible actions. Other 
 As the `Action` and `Property` commands are very general they are not the fastest and easiest to use. Some common blocks have fast custom commands to accommodate for that. These commands will only consider one specific block or block type. Other blocks (part of a group e.g.) will be ignored:
 #### Actions:
 - `Piston <T:Block|G:Group> <action>` 
-    - ##### Actions: `toggle, on, off, extend, retract, reverse, attach, detach`
+    - Actions: toggle, on, off, extend, retract, reverse, attach, detach
 - `Rotor <T:Block|G:Group> <action>`
-    - ##### Actions: `toggle, reverse, on, off, attach, detach`
+    - Actions: toggle, reverse, on, off, attach, detach
 - `Connector <T:Block|G:Group> <action>`
-    - ##### Actions: `toggle, on, off, toggleconnect, connect, disconnect,`
+    - Actions: toggle, on, off, toggleconnect, connect, disconnect
 - `Merge <T:Block|G:Group> <action>`
-    - ##### Actions: `toggle, on, off,`
+    - Actions: toggle, on, off
 #### Properties
 - `Piston <T:Block|G:Group> <property> <comparer> <value>`
-    - ##### Properties: `enabled, velocity, maxvelocity, minlimit, maxlimit, currentposition`
+    - Properties: enabled, velocity, maxvelocity, minlimit, maxlimit, currentposition
 - `Rotor <T:Block|G:Group> <property> <comparer> <value>`
-    - ##### Properties: `enabled, angle, torque, breakingtorque, velocity, lowerlimit, upperlimit, displacement, rotorlock`
+    - Properties: enabled, angle, torque, breakingtorque, velocity, lowerlimit, upperlimit, displacement, rotorlock
 - `Connector <T:Block|G:Group> <property> <comparer> <value>`
-    - ##### Properties: `enabled, throwout, collectall, pullstrength, isparkingenabled, connectionallowed, connected`
+    - Properties: enabled, throwout, collectall, pullstrength, isparkingenabled, connectionallowed, connected
 - `Merge <T:Block|G:Group> <property> <comparer> <value>`
-    - ##### Properties: `enabled, connected`
+    - Properties: enabled, connected
 
 ### Sequence:
-To create a sequence just add a `[Your sequence name]` tag in the programmable blocks CustomData and add the commands after that. You can also use comments inside of a sequence by starting the line with `'//'`.
+To create a sequence just add a `[Your sequence name]` tag in the programmable blocks CustomData and add the commands after that. You can also use comments inside of a sequence by starting the line with `//`.
 
 #### Example:
 ```
