@@ -23,23 +23,21 @@ Using those with just the Block argument will print the possible actions. Other 
 
 As the `Action` and `Property` commands are very general they are not the fastest and easiest to use. Some common blocks have fast custom commands to accommodate for that. These commands will only consider one specific block or block type. Other blocks (part of a group e.g.) will be ignored:
 #### Actions:
-- `Piston <T:Block|G:Group> <action>` 
-    - Actions: toggle, on, off, extend, retract, reverse, attach, detach
-- `Rotor <T:Block|G:Group> <action>`
-    - Actions: toggle, reverse, on, off, attach, detach
-- `Connector <T:Block|G:Group> <action>`
-    - Actions: toggle, on, off, toggleconnect, connect, disconnect
-- `Merge <T:Block|G:Group> <action>`
-    - Actions: toggle, on, off
-#### Properties
-- `Piston <T:Block|G:Group> <property> <comparer> <value>`
-    - Properties: enabled, velocity, maxvelocity, minlimit, maxlimit, currentposition
-- `Rotor <T:Block|G:Group> <property> <comparer> <value>`
-    - Properties: enabled, angle, torque, breakingtorque, velocity, lowerlimit, upperlimit, displacement, rotorlock
-- `Connector <T:Block|G:Group> <property> <comparer> <value>`
-    - Properties: enabled, throwout, collectall, pullstrength, isparkingenabled, connectionallowed, connected
-- `Merge <T:Block|G:Group> <property> <comparer> <value>`
-    - Properties: enabled, connected
+| Command | Arguments | Actions |
+|---|---|---|
+|Piston|`<T:Block\|G:Group> <action>`|toggle, on, off, extend, retract, reverse, attach, detach|
+|Rotor|`<T:Block\|G:Group> <action>`|toggle, reverse, on, off, attach, detach|
+|Connector|`<T:Block\|G:Group> <action>`|toggle, on, off, toggleconnect, connect, disconnect|
+|Merge|`<T:Block\|G:Group> <action>`|toggle, on, off|
+|Drill|`<T:Block\|G:Group> <action>`|toggle, on, off|
+#### Properties:
+| Command | Arguments | Properties |
+|---|---|---|
+|Piston|`<T:Block\|G:Group> <property> <comparer> <value>`|enabled, velocity, maxvelocity, minlimit, maxlimit, currentposition|
+|Rotor|`<T:Block\|G:Group> <property> <comparer> <value>`|enabled, angle, torque, breakingtorque, velocity, lowerlimit, upperlimit, displacement, rotorlock|
+|Connector|`<T:Block\|G:Group> <property> <comparer> <value>`|enabled, throwout, collectall, pullstrength, isparkingenabled, connectionallowed, connected|
+|Merge|`<T:Block\|G:Group> <property> <comparer> <value>`|enabled, connected|
+|Drill|`<T:Block\|G:Group> <property> <comparer> <value>`|enabled, activated|
 
 ### Sequence:
 To create a sequence just add a `[Your sequence name]` tag in the programmable blocks CustomData and add the commands after that. You can also use comments inside of a sequence by starting the line with `//`.

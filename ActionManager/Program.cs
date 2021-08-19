@@ -345,6 +345,9 @@ namespace IngameScript
                                         case "merge":
                                             cmd = property ? cmd = new MergePropertyCommand() : cmd = new MergeActionCommand();
                                             break;
+                                        case "drill":
+                                            cmd = property ? cmd = new DrillPropertyCommand() : cmd = new DrillActionCommand();
+                                            break;
                                         case "self":
                                             cmd = property ? cmd = new SelfPropertyCommand() : cmd = new SelfActionCommand();
                                             break;
