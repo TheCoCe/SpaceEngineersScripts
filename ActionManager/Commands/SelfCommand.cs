@@ -106,13 +106,14 @@ namespace IngameScript
             {
                 none,
                 status,
+                currentcommandidx,
             }
 
             private SelfProperties _selfProperty = SelfProperties.none;
             private CompareModes _compareMode = CompareModes.none;
             CommandBuffer.BufferStates _state;
             string _bufferName = "";
-
+            float _floatValue;
 
             public override bool TryParseCommand(MyCommandLine command)
             {
@@ -160,6 +161,12 @@ namespace IngameScript
                                 return false;
                             }
                             break;
+                        case SelfProperties.currentcommandidx:
+                            if(!float.TryParse(command.Argument(4), out _floatValue))
+                            {
+                                return false;
+                            }
+                            break;
                         default:
                             return false;
                     }
@@ -178,7 +185,9 @@ namespace IngameScript
                 switch (_selfProperty)
                 {
                     case SelfProperties.status:
-                        return CheckProperty(_state);
+                        return CheckProperty(program._buffers[_bufferName].BufferState);
+                    case SelfProperties.currentcommandidx:
+                        return CheckProperty(program._buffers[_bufferName].CurrentBufferIndex);
                     default:
                         return true;
                 }
@@ -186,15 +195,29 @@ namespace IngameScript
 
             private bool CheckProperty(CommandBuffer.BufferStates state)
             {
-                CommandBuffer.BufferStates bufferState = program._buffers[_bufferName].BufferState; 
                 switch (_compareMode)
                 {
                     case CompareModes.equals:
-                        _buffer.LogInfo($"Checking {bufferState} == {state}");
-                        return bufferState == state;
+                        _buffer.LogInfo($"Checking {state} == {_state}");
+                        return state == _state;
                     case CompareModes.notequals:
-                        _buffer.LogInfo($"Checking {bufferState} != {state}");
-                        return bufferState != state;
+                        _buffer.LogInfo($"Checking {state} != {_state}");
+                        return state != _state;
+                    default:
+                        return true;
+                }
+            }
+
+            private bool CheckProperty(float value)
+            {
+                switch (_compareMode)
+                {
+                    case CompareModes.equals:
+                        _buffer.LogInfo($"Checking {value} == {_floatValue}");
+                        return value == _floatValue;
+                    case CompareModes.notequals:
+                        _buffer.LogInfo($"Checking {value} != {_floatValue}");
+                        return value != _floatValue;
                     default:
                         return true;
                 }

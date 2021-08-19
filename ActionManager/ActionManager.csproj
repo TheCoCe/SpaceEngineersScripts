@@ -39,6 +39,7 @@
   <Import Project="MDK/MDK.paths.props" Condition="exists('MDK/MDK.paths.props')" />
   <ItemGroup>
     <Compile Include="Commands\BlockCommands\ConnectorCommands.cs" />
+    <Compile Include="Commands\BlockCommands\DrillCommands.cs" />
     <Compile Include="Commands\DelayCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\PrintCommand.cs" />
