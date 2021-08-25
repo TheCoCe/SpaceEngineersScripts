@@ -42,6 +42,7 @@
     <Compile Include="Commands\BlockCommands\DrillCommands.cs" />
     <Compile Include="Commands\DelayCommand.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\BlockCommands\InventoryCommand.cs" />
     <Compile Include="Commands\PrintCommand.cs" />
     <Compile Include="Commands\SelfCommand.cs" />
     <Compile Include="Commands\TerminalCommands.cs" />

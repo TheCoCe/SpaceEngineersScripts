@@ -334,22 +334,43 @@ namespace IngameScript
                                     switch (commandString)
                                     {
                                         case "piston":
-                                            cmd = property ? cmd = new PistonPropertyCommand() : cmd = new PistonActionCommand();
+                                            if (property)
+                                                cmd = new PistonPropertyCommand();
+                                            else
+                                                cmd = new PistonActionCommand();
                                             break;
                                         case "rotor":
-                                            cmd = property ? cmd = new RotorPropertyCommand() : cmd = new RotorActionCommand();
+                                            if (property)
+                                                cmd = new RotorPropertyCommand();
+                                            else
+                                                cmd = new RotorActionCommand();
                                             break;
                                         case "connector":
-                                            cmd = property ? cmd = new ConnectorPropertyCommand() : cmd = new ConnectorActionCommand();
+                                            if (property)
+                                                cmd = new ConnectorPropertyCommand();
+                                            else
+                                                cmd = new ConnectorActionCommand();
                                             break;
                                         case "merge":
-                                            cmd = property ? cmd = new MergePropertyCommand() : cmd = new MergeActionCommand();
+                                            if (property)
+                                                cmd = new MergePropertyCommand();
+                                            else
+                                                cmd = new MergeActionCommand();
                                             break;
                                         case "drill":
-                                            cmd = property ? cmd = new DrillPropertyCommand() : cmd = new DrillActionCommand();
+                                            if (property)
+                                                cmd = new DrillPropertyCommand();
+                                            else
+                                                cmd = new DrillActionCommand();
                                             break;
                                         case "self":
-                                            cmd = property ? cmd = new SelfPropertyCommand() : cmd = new SelfActionCommand();
+                                            if (property)
+                                                cmd = new SelfPropertyCommand();
+                                            else
+                                                cmd = new SelfActionCommand();
+                                            break;
+                                        case "inventory":
+                                            cmd = new InventoryCommand();
                                             break;
                                         default:
                                             LogWarning($"Parsing invalid: {_commandLine.Argument(0)} is not a valid command");
