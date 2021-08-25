@@ -46,7 +46,7 @@ namespace IngameScript
             
             public override bool Execute(float deltaTime)
             {
-                program.Echo(message);
+                _buffer.LogMessage(MessageManager.MessageType.Info, message, 20F);
                 return true;
             }
         }
