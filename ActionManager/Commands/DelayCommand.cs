@@ -49,7 +49,12 @@ namespace IngameScript
             {
                 currentTimer += deltaTime;
                 _buffer.LogInfo($"Delay: {Math.Round(currentTimer, 1)}/{delayInSeconds} s");
-                return currentTimer >= delayInSeconds;
+                if(currentTimer >= delayInSeconds)
+                {
+                    currentTimer = 0F;
+                    return true;
+                }
+                return false;
             }
 
         }
