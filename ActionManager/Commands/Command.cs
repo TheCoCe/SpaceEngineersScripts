@@ -102,25 +102,25 @@ namespace IngameScript
             }
         }
 
+        public enum ComparisonModes
+        {
+            none,
+            equals,
+            notequals,
+            greater,
+            less,
+            greaterequals,
+            lessequals,
+            set
+        }
+
         public abstract class BasePropertyCommand<T> : BaseBlockCommand<T> where T : class, IMyTerminalBlock
         {
-            public enum PropertyModes
+            private ComparisonModes _compareMode = ComparisonModes.none;
+            protected ComparisonModes CompareMode
             {
-                none,
-                equals,
-                notequals,
-                greater,
-                less,
-                greaterequals,
-                lessequals,
-                set
-            }
-
-            private PropertyModes _propertyMode = PropertyModes.none;
-            protected PropertyModes PropertyMode
-            {
-                get { return _propertyMode; }
-                set { _propertyMode = value; }
+                get { return _compareMode; }
+                set { _compareMode = value; }
             }
 
             public override bool TryParseCommand(MyCommandLine command)
@@ -131,34 +131,34 @@ namespace IngameScript
                 if (command.ArgumentCount >= 5)
                 {
                     string propertyMode = command.Argument(3);
-                    if (!Enum.TryParse(propertyMode.ToLower(), out _propertyMode))
+                    if (!Enum.TryParse(propertyMode.ToLower(), out _compareMode))
                     {
                         switch (propertyMode)
                         {
                             case "==":
-                                PropertyMode = PropertyModes.equals;
+                                CompareMode = ComparisonModes.equals;
                                 break;
                             case "!=":
-                                PropertyMode = PropertyModes.notequals;
+                                CompareMode = ComparisonModes.notequals;
                                 break;
                             case ">":
-                                PropertyMode = PropertyModes.greater;
+                                CompareMode = ComparisonModes.greater;
                                 break;
                             case "<":
-                                PropertyMode = PropertyModes.less;
+                                CompareMode = ComparisonModes.less;
                                 break;
                             case ">=":
-                                PropertyMode = PropertyModes.greaterequals;
+                                CompareMode = ComparisonModes.greaterequals;
                                 break;
                             case "<=":
-                                PropertyMode = PropertyModes.lessequals;
+                                CompareMode = ComparisonModes.lessequals;
                                 break;
                             case "=":
-                                PropertyMode = PropertyModes.set;
+                                CompareMode = ComparisonModes.set;
                                 break;
                         }
 
-                        if (PropertyMode == PropertyModes.none)
+                        if (CompareMode == ComparisonModes.none)
                         {
                             _buffer.LogError($"'{propertyMode}' is not a valid comparison mode.");
                             return false;
@@ -268,24 +268,24 @@ namespace IngameScript
 
             protected bool CheckProperty(float value)
             {
-                switch (PropertyMode)
+                switch (CompareMode)
                 {
-                    case PropertyModes.equals:
+                    case ComparisonModes.equals:
                         _buffer.LogInfo($"Checking {value} == {_floatValue}");
                         return value == _floatValue;
-                    case PropertyModes.notequals:
+                    case ComparisonModes.notequals:
                         _buffer.LogInfo($"Checking {value} != {_floatValue}");
                         return value != _floatValue;
-                    case PropertyModes.greater:
+                    case ComparisonModes.greater:
                         _buffer.LogInfo($"Checking {value} > {_floatValue}");
                         return value > _floatValue;
-                    case PropertyModes.less:
+                    case ComparisonModes.less:
                         _buffer.LogInfo($"Checking {value} < {_floatValue}");
                         return value < _floatValue;
-                    case PropertyModes.greaterequals:
+                    case ComparisonModes.greaterequals:
                         _buffer.LogInfo($"Checking {value} >= {_floatValue}");
                         return value >= _floatValue;
-                    case PropertyModes.lessequals:
+                    case ComparisonModes.lessequals:
                         _buffer.LogInfo($"Checking {value} <= {_floatValue}");
                         return value <= _floatValue;
                     default:
@@ -295,12 +295,12 @@ namespace IngameScript
 
             protected bool CheckProperty(bool value)
             {
-                switch (PropertyMode)
+                switch (CompareMode)
                 {
-                    case PropertyModes.equals:
+                    case ComparisonModes.equals:
                         _buffer.LogInfo($"Checking {value} == {_boolValue}");
                         return value == _boolValue;
-                    case PropertyModes.notequals:
+                    case ComparisonModes.notequals:
                         _buffer.LogInfo($"Checking {value} != {_boolValue}");
                         return value != _boolValue;
                     default:
@@ -310,12 +310,12 @@ namespace IngameScript
 
             protected bool CheckProperty(Color value)
             {
-                switch (PropertyMode)
+                switch (CompareMode)
                 {
-                    case PropertyModes.equals:
+                    case ComparisonModes.equals:
                         _buffer.LogInfo($"Checking {value} == {_colorValue}");
                         return value == _colorValue;
-                    case PropertyModes.notequals:
+                    case ComparisonModes.notequals:
                         _buffer.LogInfo($"Checking {value} != {_colorValue}");
                         return value != _colorValue;
                     default:

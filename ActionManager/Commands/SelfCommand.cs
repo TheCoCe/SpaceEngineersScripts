@@ -50,7 +50,7 @@ namespace IngameScript
                     }
                     
                     string actionName = command.Argument(2).ToLower();
-                    if (!Enum.TryParse(actionName, out _action))
+                    if (!Enum.TryParse(actionName, true, out _action))
                     {
                         _buffer.LogError($"{actionName} is not a valid action!");
                         return false;
@@ -68,44 +68,36 @@ namespace IngameScript
 
             public override bool Execute(float deltaTime)
             {
+                CommandBuffer buffer = program._buffers[_bufferName];
                 switch (_action)
                 {
                     case SelfAction.run:
-                        program._buffers[_bufferName]?.Run();
+                        buffer?.Run();
                         break;
                     case SelfAction.stop:
-                        program._buffers[_bufferName]?.Stop();
+                        buffer?.Stop();
                         break;
                     case SelfAction.pause:
-                        program._buffers[_bufferName]?.Pause();
+                        buffer?.Pause();
                         break;
                     case SelfAction.resume:
-                        program._buffers[_bufferName]?.Resume();
+                        buffer?.Resume();
                         break;
                     case SelfAction.restart:
-                        program._buffers[_bufferName]?.Restart();
+                        buffer?.Restart();
                         break;
                     default:
                         break;
                 }
-
+                // if we are calling our own buffer we need to return false so that we don't increment the buffer index
+                if (_buffer == buffer)
+                    return false;
                 return true;
             }
         }
 
         public class SelfPropertyCommand : Command
         {
-            enum CompareModes
-            {
-                none,
-                equals,
-                notequals,
-                greater,
-                less,
-                greaterequals,
-                lessequals,
-            }
-
             enum SelfProperties
             {
                 none,
@@ -114,7 +106,7 @@ namespace IngameScript
             }
 
             private SelfProperties _selfProperty = SelfProperties.none;
-            private CompareModes _compareMode = CompareModes.none;
+            private ComparisonModes _compareMode = ComparisonModes.none;
             CommandBuffer.BufferStates _state;
             string _bufferName = "";
             float _floatValue;
@@ -132,34 +124,34 @@ namespace IngameScript
                     }
 
                     string property = command.Argument(2).ToLower();
-                    if (!Enum.TryParse(property, out _selfProperty))
+                    if (!Enum.TryParse(property, true, out _selfProperty))
                     {
                         _buffer.LogError($"{property} is not a valid property.");
                         return false;
                     }
 
                     string comparison = command.Argument(3).ToLower();
-                    if(!Enum.TryParse(comparison, out _compareMode))
+                    if(!Enum.TryParse(comparison, true, out _compareMode))
                     {
                         switch (comparison)
                         {
                             case "==":
-                                _compareMode = CompareModes.equals;
+                                _compareMode = ComparisonModes.equals;
                                 break;
                             case "!=":
-                                _compareMode = CompareModes.notequals;
+                                _compareMode = ComparisonModes.notequals;
                                 break;
                             case ">":
-                                _compareMode = CompareModes.greater;
+                                _compareMode = ComparisonModes.greater;
                                 break;
                             case ">=":
-                                _compareMode = CompareModes.greaterequals;
+                                _compareMode = ComparisonModes.greaterequals;
                                 break;
                             case "<":
-                                _compareMode = CompareModes.less;
+                                _compareMode = ComparisonModes.less;
                                 break;
                             case "<=":
-                                _compareMode = CompareModes.lessequals;
+                                _compareMode = ComparisonModes.lessequals;
                                 break;
                             default:
                                 _buffer.LogError($"{_compareMode} is not a valid compare mode!");
@@ -171,7 +163,7 @@ namespace IngameScript
                     switch (_selfProperty)
                     {
                         case SelfProperties.status:
-                            if(!Enum.TryParse(value, out _state))
+                            if(!Enum.TryParse(value, true, out _state))
                             {
                                 _buffer.LogError($"{value} is not a valid state!");
                                 return false;
@@ -214,10 +206,10 @@ namespace IngameScript
             {
                 switch (_compareMode)
                 {
-                    case CompareModes.equals:
+                    case ComparisonModes.equals:
                         _buffer.LogInfo($"Checking {state} == {_state}");
                         return state == _state;
-                    case CompareModes.notequals:
+                    case ComparisonModes.notequals:
                         _buffer.LogInfo($"Checking {state} != {_state}");
                         return state != _state;
                     default:
@@ -229,22 +221,22 @@ namespace IngameScript
             {
                 switch (_compareMode)
                 {
-                    case CompareModes.equals:
+                    case ComparisonModes.equals:
                         _buffer.LogInfo($"Checking {value} == {_floatValue}");
                         return value == _floatValue;
-                    case CompareModes.notequals:
+                    case ComparisonModes.notequals:
                         _buffer.LogInfo($"Checking {value} != {_floatValue}");
                         return value != _floatValue;
-                    case CompareModes.greater:
+                    case ComparisonModes.greater:
                         _buffer.LogInfo($"Checking {value} > {_floatValue}");
                         return value > _floatValue;
-                    case CompareModes.less:
+                    case ComparisonModes.less:
                         _buffer.LogInfo($"Checking {value} < {_floatValue}");
                         return value < _floatValue;
-                    case CompareModes.greaterequals:
+                    case ComparisonModes.greaterequals:
                         _buffer.LogInfo($"Checking {value} >= {_floatValue}");
                         return value >= _floatValue;
-                    case CompareModes.lessequals:
+                    case ComparisonModes.lessequals:
                         _buffer.LogInfo($"Checking {value} <= {_floatValue}");
                         return value <= _floatValue;
                     default:

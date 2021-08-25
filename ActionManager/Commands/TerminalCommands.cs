@@ -319,9 +319,9 @@ namespace IngameScript
 
             private bool HandlePropertyMode(IMyTerminalBlock block)
             {
-                switch (PropertyMode)
+                switch (CompareMode)
                 {
-                    case PropertyModes.none:
+                    case ComparisonModes.none:
                         {
                             List<ITerminalProperty> properties = new List<ITerminalProperty>();
                             block.GetProperties(properties);
@@ -331,19 +331,19 @@ namespace IngameScript
                             }
                             return true;
                         }
-                    case PropertyModes.equals:
+                    case ComparisonModes.equals:
                         return _property.Equal(block);
-                    case PropertyModes.notequals:
+                    case ComparisonModes.notequals:
                         return !_property.Equal(block);
-                    case PropertyModes.greater:
+                    case ComparisonModes.greater:
                         return _property.GreaterThan(block);
-                    case PropertyModes.less:
+                    case ComparisonModes.less:
                         return _property.LessThan(block);
-                    case PropertyModes.greaterequals:
+                    case ComparisonModes.greaterequals:
                         return _property.GreaterThanOrEqual(block);
-                    case PropertyModes.lessequals:
+                    case ComparisonModes.lessequals:
                         return _property.LessThanOrEqual(block);
-                    case PropertyModes.set:
+                    case ComparisonModes.set:
                         _property.Set(block);
                         return true;
                     default:

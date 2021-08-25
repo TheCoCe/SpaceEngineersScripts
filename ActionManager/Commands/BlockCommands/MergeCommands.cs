@@ -69,7 +69,7 @@ namespace IngameScript
 
             protected override bool HandleProperty(IMyShipMergeBlock block)
             {
-                if (PropertyMode == PropertyModes.set)
+                if (CompareMode == ComparisonModes.set)
                 {
                     switch (_property)
                     {
