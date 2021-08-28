@@ -26,22 +26,20 @@ namespace IngameScript
         static Program program = null;
 
         string _customData = "";
+        Dictionary<string, CommandBuffer> _buffers;
+        
         const int _customDataParseInterval = 100;
         int _customDataParseTicks = 0;
-
-        const float statCooldown = 1.0F;
-        float currentStatCooldown = 0.0F;
 
         static readonly string[] procSigns = { "—", " \\ ", " | ", " / " };
         int procSignIdx = 0;
 
+        // statistics data
         int lastInstructions = 0;
         int maxInstructions = 0;
-
         float lastMs = 0F;
         float maxMs = 0F;
 
-        Dictionary<string, CommandBuffer> _buffers;
 
         public Program()
         {
@@ -120,12 +118,6 @@ namespace IngameScript
 
         void GatherStats(float deltaTime)
         {
-            if(currentStatCooldown < statCooldown)
-            {
-                currentStatCooldown += deltaTime;
-                return;
-            }
-
             lastMs = (float)Runtime.LastRunTimeMs;
             if (lastMs > maxMs)
                 maxMs = lastMs;
@@ -203,9 +195,10 @@ namespace IngameScript
         }
 
         /// <summary>
-        /// Parse the custom data
+        /// Parse the CustomData of the programmable block and create sequences and commands from them.
         /// </summary>
         /// <returns>Return true if data is new and parsed, false if the data didn't change from the last parse.</returns>
+
         bool ParseCustomData()
         {
             if (_customData.Equals(Me.CustomData))
@@ -216,53 +209,62 @@ namespace IngameScript
 
             _customData = string.Copy(Me.CustomData);
 
-            string pattern = @"^(\[.*\])(.|\n)*?(?=(^\[)|\Z)";
+            var customDataLines = _customData.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var keys = _buffers.Keys.ToList();
 
-            var matches = System.Text.RegularExpressions.Regex.Matches(_customData, pattern, System.Text.RegularExpressions.RegexOptions.Multiline);
-
-            if (matches.Count > 0)
+            for (int i = 0; i < customDataLines.Length; i++)
             {
-                // Collect current keys
-                var keys = _buffers.Keys.ToList();
-                foreach (System.Text.RegularExpressions.Match match in matches)
-                {
-                    string buffer = match.Value;
-                    int nameEndIdx = buffer.IndexOf("]");
-                    string bufferName = buffer.Substring(1, nameEndIdx - 1);
-                    Echo($"{bufferName}:");
+                var line = customDataLines[i].Trim();
 
-                    var commands = buffer.Substring(nameEndIdx + 1).Split(new[] { "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-                    if (commands.Length > 0)
+                // [sequence]
+                if (line.Length > 2 && line[0] == '[' && line[line.Length - 1] == ']')
+                {
+                    var sequenceName = line.Substring(1, line.Length - 2);
+
+                    int cmdIdx = i + 1;
+                    for (; cmdIdx < customDataLines.Length; cmdIdx++)
                     {
-                        if (_buffers.ContainsKey(bufferName))
-                        {
-                            if (_buffers[bufferName].BuildCommandBuffer(commands))
-                                Echo($"{bufferName} updated successfully");
-                            // Remove updated buffer keys
-                            keys.Remove(bufferName);
-                        }
-                        else
-                        {
-                            CommandBuffer cmdbuffer = new CommandBuffer();
-                            _buffers.Add(bufferName, cmdbuffer);
-                            cmdbuffer.BuildCommandBuffer(commands);
-                        }
+                        line = customDataLines[cmdIdx] = customDataLines[cmdIdx].Trim();
+
+                        if (line.StartsWith("//")) continue;                                            // ignore comments
+                        if (line.Length > 2 && line[0] == '[' && line[line.Length - 1] == ']') break;   // stop on next sequence
+                    }
+                    cmdIdx--;
+
+                    // 4, [a]   <- i
+                    // 5, aaaaa
+                    // 6, aaaaa <- cmdIdx
+                    // 7, [b]
+                    int length = cmdIdx - i;
+                    string[] commands = new string[length];
+                    Array.Copy(customDataLines, i + 1, commands, 0, length);
+                    i = cmdIdx;
+
+                    if(_buffers.ContainsKey(sequenceName))
+                    {
+                        if (_buffers[sequenceName].BuildCommandBuffer(commands))
+                            Echo($"{sequenceName} updated successfully");
+                        // Remove updated buffer keys
+                        keys.Remove(sequenceName);
+                    }
+                    else
+                    {
+                        var cmdbuffer = new CommandBuffer();
+                        _buffers.Add(sequenceName, cmdbuffer);
+                        cmdbuffer.BuildCommandBuffer(commands);
                     }
                 }
+            }
 
-                // Remove now undefined buffers
-                foreach (var key in keys) _buffers.Remove(key);
-            }
-            else
-            {
-                if (_buffers.Count > 0)
-                {
-                    _buffers.Clear();
-                }
-            }
+            // Remove buffers that are no longer defined
+            foreach (var key in keys) _buffers.Remove(key);
 
             return true;
         }
+
+        /// <summary>
+        /// CommandBuffer holds a list of commands to execute. Needs to be ticked.
+        /// </summary>
 
         public class CommandBuffer
         {
@@ -302,12 +304,11 @@ namespace IngameScript
                 CurrentBufferIndex = 0;
                 messageManager.Clear();
 
-                foreach (var c in commands)
+                foreach (var c in _commands)
                 {
-                    if (c.Trim().StartsWith("//"))
-                        continue;
+                    if (c.StartsWith("//")) continue;
 
-                    if (_commandLine.TryParse(c.Trim()))
+                    if (_commandLine.TryParse(c))
                     {
                         string commandString = _commandLine.Argument(0).ToLower();
                         Command cmd = null;
@@ -326,6 +327,9 @@ namespace IngameScript
                                 break;
                             case "print":
                                 cmd = new PrintCommand();
+                                break;
+                            case "inventory":
+                                cmd = new InventoryCommand();
                                 break;
                             default:
                                 {
@@ -368,9 +372,6 @@ namespace IngameScript
                                                 cmd = new SelfPropertyCommand();
                                             else
                                                 cmd = new SelfActionCommand();
-                                            break;
-                                        case "inventory":
-                                            cmd = new InventoryCommand();
                                             break;
                                         default:
                                             LogWarning($"Parsing invalid: {_commandLine.Argument(0)} is not a valid command");
@@ -486,6 +487,10 @@ namespace IngameScript
                 return messageManager.GetMessages();
             }
         }
+
+        /// <summary>
+        /// MessageManager can recieve and handle different message types.
+        /// </summary>
 
         public class MessageManager
         {
