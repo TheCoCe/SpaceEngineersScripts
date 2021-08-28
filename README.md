@@ -12,7 +12,7 @@ Simple script for automating piston drill operation. The Script checks the curre
 The action manager script is a simple way to program simple action sequences without the need for timer blocks. The script supports multiple sequences per programmable block that you can run via the agruments of the block. You can execute any action you can execute via the terminal and set or check properties of the block or group. 
 
 ### **Commands:**
-The two general commands for this are:
+The two general action and property commands are:
 |Command|Arguments|Description|
 |---|---|---|
 |Action|`<T:Block\|G:Group> <action>`|**T:Block:** `T:` followed by the name of the block <br> **G:Group:** `G:` followed by the name of the group <br> **action:** the action to execute, if blank will print a list of the possible actions <br>|
@@ -43,13 +43,53 @@ command <T:Block|G:Group> <property> <comparer> <value>
 |Merge|enabled, connected|
 |Drill|enabled, activated|
 
-#### **Other Commands:**
+#### **Delay:**
+```
+Delay <seconds>
+```
+Waits for `<seconds>` and then continues execution of the next command.
 
-| Command | Arguments | Description |
-| --- | --- | --- |
-|Delay|`<seconds>`| seconds: time in seconds|
-|Self|`<sequence> <action>`|**sequence:** name of the sequence <br> **action:** run, pause, resume, stop, restart|
-|Self|`<sequence> <propery> <comparer> <value>`|**sequence:** name of the sequence <br> **property**: status, currentcommandidx|
+#### **Self:**
+With the self command you can execute and check the status of sequences on the same programmable block.
+
+```
+Self <sequence> <action> 
+Self <sequence> <propery> <comparer> <value>
+```
+`<sequence>`: name of the sequence <br>
+`<action>`: run, pause, resume, stop, restart <br>
+`<property>`: status, currentCommandIdx
+
+#### **Inventory Command:**
+With the inventory command you can compare the contents of different containers against a list provided via the arguments.
+
+```
+Inventory <T:Block|G:Group> <comparer> <{item:count,...}>
+```
+**Possible Items**:
+```
+Ores:
+cobaltore, goldore, ice, ironore, magnesiumore, nickelore, platinumore, siliconore, silverore, stoneore, uraniumore
+
+Ingots:
+cobaltingot, goldingot, ironingot, magnesiumingot, nickelingot, platinumingot, scrap, siliconingot, silveringot, stoneingot, uraniumingot
+
+Components:
+bulletproofglass, computer, construction, detector, display, girder, gravitygenerator, interiorplate, largetube, Medical, metalgrid, motor, powercell, radiocommunication, reactor, smalltube, solarcell, steelplate, thrust
+
+Tools:
+welderitem, handdrillitem, anglegrinderitem, automaticrifleitem
+
+Ammo:
+missle200mm, nato_25x184mm, nato_5p56x45mm, explosives
+```
+Example:
+
+```
+Inventory T:MyContainer >= {steelplate:100,computer:10,display:3,interiorplate:50}
+```
+
+<br>
 
 ### **Sequence:**
 To create a sequence just add a `[Your sequence name]` tag in the programmable blocks CustomData and add the commands after that. You can also use comments inside of a sequence by starting the line with `//`.
