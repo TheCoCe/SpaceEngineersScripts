@@ -40,7 +40,7 @@ namespace IngameScript
 
             _ini = new MyIni();
 
-            if(_ini.TryParse(Me.CustomData))
+            if (_ini.TryParse(Me.CustomData))
             {
                 var miningGroupName = _ini.Get("SMM", "miningGroup").ToString();
                 var storageGroup = _ini.Get("SMM", "storageGroup").ToString();
@@ -56,7 +56,7 @@ namespace IngameScript
 
         public void Main(string argument, UpdateType updateSource)
         {
-            if(_storage != null)
+            if (_storage != null)
             {
                 _storage.GetBlocksOfType(_cargoBlocks);
 
@@ -77,11 +77,11 @@ namespace IngameScript
                 {
                     double percent = (double)currentVolume / (double)maxVolume;
 
-                    if(percent >= stopStoragePercent)
+                    if (percent >= stopStoragePercent)
                     {
                         DeActivateMining(false);
                     }
-                    else if(percent <= startStoragePercent)
+                    else if (percent <= startStoragePercent)
                     {
                         DeActivateMining(true);
                     }

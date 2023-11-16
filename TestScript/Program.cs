@@ -29,10 +29,13 @@ namespace IngameScript
         int _hash = 0;
         List<IMyTerminalBlock> groupBlocks = new List<IMyTerminalBlock>();
 
+        IMyCockpit cockpit;
+
         public Program()
         {
             block = GridTerminalSystem.GetBlockWithName("TestPiston") as IMyFunctionalBlock;
             piston = GridTerminalSystem.GetBlockWithName("TestPiston") as IMyPistonBase;
+            cockpit = GridTerminalSystem.GetBlockWithName("TestCockpit") as IMyCockpit;
 
             group = GridTerminalSystem.GetBlockGroupWithName("TestGroup");
             _hash = group.GetHashCode();
@@ -78,6 +81,22 @@ namespace IngameScript
             */
             //groupBlocks.Clear();
             //group.GetBlocksOfType(groupBlocks);
+            if (cockpit != null)
+            {
+                Vector3 vector = cockpit.MoveIndicator;
+                float roll = cockpit.RollIndicator;
+                Vector2 rotation = cockpit.RotationIndicator;
+
+                cockpit.GetSurface(0).WriteText($"move: {vector}", false);
+                cockpit.GetSurface(0).WriteText($"\nroll: {roll}", true);
+                cockpit.GetSurface(0).WriteText($"\nrota: {rotation}", true);
+
+                Echo("found!");
+            }
+            else
+            {
+                Echo($"Not found");
+            }
 
             Echo($"{Runtime.LastRunTimeMs} ms");
         }

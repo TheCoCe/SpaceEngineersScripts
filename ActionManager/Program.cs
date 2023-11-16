@@ -1,4 +1,5 @@
 ﻿using Sandbox.Game.EntityComponents;
+using Sandbox.ModAPI;
 using Sandbox.ModAPI.Ingame;
 using Sandbox.ModAPI.Interfaces;
 using SpaceEngineers.Game.ModAPI.Ingame;
@@ -24,10 +25,10 @@ namespace IngameScript
     {
         private static MyCommandLine _commandLine = new MyCommandLine();
         static Program program = null;
-
+        
         string _customData = "";
         Dictionary<string, CommandBuffer> _buffers;
-        
+
         const int _customDataParseInterval = 100;
         int _customDataParseTicks = 0;
 
@@ -94,7 +95,7 @@ namespace IngameScript
                 }
 
                 string bufferMessages = buffer.Value.GetMessages();
-                if(bufferMessages.Length > 0)
+                if (bufferMessages.Length > 0)
                 {
                     info += "  Log Messages: \n";
                     info += buffer.Value.GetMessages();
@@ -240,7 +241,7 @@ namespace IngameScript
                     Array.Copy(customDataLines, i + 1, commands, 0, length);
                     i = cmdIdx;
 
-                    if(_buffers.ContainsKey(sequenceName))
+                    if (_buffers.ContainsKey(sequenceName))
                     {
                         if (_buffers[sequenceName].BuildCommandBuffer(commands))
                             Echo($"{sequenceName} updated successfully");
@@ -384,7 +385,7 @@ namespace IngameScript
                         if (cmd != null)
                         {
                             cmd.SetCommandBuffer(this);
-                            if(cmd.TryParseCommand(_commandLine))
+                            if (cmd.TryParseCommand(_commandLine))
                             {
                                 _commandBuffer.Add(cmd);
                             }

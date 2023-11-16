@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionManager", "ActionManager\ActionManager.csproj", "{6CB2D0D2-FDB4-4025-B6F1-C536DDFAEA84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrillSpeedToggle", "DrillSpeedToggle\DrillSpeedToggle.csproj", "{70BF15F9-3A33-4861-9FED-5A568F7CCBD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAirlock", "SimpleAirlock\SimpleAirlock.csproj", "{256E0939-74F4-4AC9-B0F9-0FE89C173578}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMiningManager", "SimpleMiningManager\SimpleMiningManager.csproj", "{BAD5DB88-B741-4C92-B032-FD240E32AE5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestScript", "TestScript\TestScript.csproj", "{4168B5D7-CA24-4C94-86F2-61E2C334D08E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CB2D0D2-FDB4-4025-B6F1-C536DDFAEA84}.Debug|x64.ActiveCfg = Debug|x64
+		{6CB2D0D2-FDB4-4025-B6F1-C536DDFAEA84}.Debug|x64.Build.0 = Debug|x64
+		{70BF15F9-3A33-4861-9FED-5A568F7CCBD1}.Debug|x64.ActiveCfg = Debug|x64
+		{70BF15F9-3A33-4861-9FED-5A568F7CCBD1}.Debug|x64.Build.0 = Debug|x64
+		{256E0939-74F4-4AC9-B0F9-0FE89C173578}.Debug|x64.ActiveCfg = Debug|x64
+		{256E0939-74F4-4AC9-B0F9-0FE89C173578}.Debug|x64.Build.0 = Debug|x64
+		{BAD5DB88-B741-4C92-B032-FD240E32AE5B}.Debug|x64.ActiveCfg = Debug|x64
+		{BAD5DB88-B741-4C92-B032-FD240E32AE5B}.Debug|x64.Build.0 = Debug|x64
+		{4168B5D7-CA24-4C94-86F2-61E2C334D08E}.Debug|x64.ActiveCfg = Debug|x64
+		{4168B5D7-CA24-4C94-86F2-61E2C334D08E}.Debug|x64.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12DD415A-A72C-4B74-902E-6491866569F1}
+	EndGlobalSection
+EndGlobal

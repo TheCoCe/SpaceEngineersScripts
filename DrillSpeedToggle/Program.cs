@@ -49,11 +49,11 @@ namespace IngameScript
             public void Update(float deltaTime)
             {
                 // TODO: remove this part
-                if(!extend && !inContact)
+                if (!extend && !inContact)
                 {
                     foreach (var drill in _drills)
                     {
-                        if(drill.GetInventory()?.CurrentVolume > 100)
+                        if (drill.GetInventory()?.CurrentVolume > 100)
                         {
                             inContact = true;
                             break;
@@ -64,13 +64,13 @@ namespace IngameScript
                 }
 
                 // TODO: this should look at every drill individually (seems expensive though)
-                if(!extend)
+                if (!extend)
                 {
                     MyFixedPoint volume = 0;
                     foreach (var drill in _drills)
                     {
                         var drillVolume = drill.GetInventory().CurrentVolume;
-                        if(drillVolume > volume)
+                        if (drillVolume > volume)
                         {
                             volume = drillVolume;
                         }
@@ -95,7 +95,7 @@ namespace IngameScript
             {
                 _program.Echo("Toggle Drill");
                 SetPistonsVelocity(movingSpeedMS);
-                
+
                 if (extend)
                 {
                     trackingVolume = 0;
@@ -157,7 +157,7 @@ namespace IngameScript
             Runtime.UpdateFrequency = UpdateFrequency.Update1;
 
             MyIniParseResult result;
-            if(!_ini.TryParse(Me.CustomData, out result))
+            if (!_ini.TryParse(Me.CustomData, out result))
             {
                 Echo($"CustomData error:\nLine {result}");
                 return;
@@ -168,7 +168,7 @@ namespace IngameScript
 
             foreach (var section in sections)
             {
-                if(_drillsDictionary.ContainsKey(section))
+                if (_drillsDictionary.ContainsKey(section))
                 {
                     Echo($"{section} is a duplicate. Groups need a unique name!");
                     continue;
@@ -177,7 +177,7 @@ namespace IngameScript
                 var pistonsGroup = _ini.Get(section, "pistons").ToString();
                 var drillsGroup = _ini.Get(section, "drills").ToString();
 
-                if(pistonsGroup != null && drillsGroup != null)
+                if (pistonsGroup != null && drillsGroup != null)
                 {
                     List<IMyPistonBase> pistons = new List<IMyPistonBase>();
                     List<IMyShipDrill> drills = new List<IMyShipDrill>();
@@ -189,7 +189,7 @@ namespace IngameScript
 
                     Echo($"Found {pistons.Count} pistons and {drills.Count} drills in {section}");
 
-                    if(pistons.Count > 0 && drills.Count > 0)
+                    if (pistons.Count > 0 && drills.Count > 0)
                     {
                         _drillsDictionary.Add(section, new Drill(pistons, drills, this));
                     }
@@ -205,14 +205,14 @@ namespace IngameScript
         {
             float deltaTime = (float)Runtime.TimeSinceLastRun.TotalSeconds;
 
-            if(updateSource == UpdateType.Update1)
+            if (updateSource == UpdateType.Update1)
             {
                 foreach (var drill in _drillsDictionary.Values)
                 {
                     drill.Update(deltaTime);
                 }
             }
-            else if(_myCommandLine.TryParse(argument))
+            else if (_myCommandLine.TryParse(argument))
             {
                 HandleCommands(_myCommandLine.Argument(0));
             }
@@ -220,11 +220,11 @@ namespace IngameScript
 
         void HandleCommands(string command)
         {
-            if(command == null)
+            if (command == null)
             {
                 Echo("No command specified");
             }
-            else if(command.Equals("toggle", StringComparison.OrdinalIgnoreCase))
+            else if (command.Equals("toggle", StringComparison.OrdinalIgnoreCase))
             {
                 ToggleDrill();
             }

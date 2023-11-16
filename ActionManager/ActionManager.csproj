@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E3E5F244-E9C3-4B12-BF5F-BA8BB0C4ADB0}</ProjectGuid>
+    <ProjectGuid>{6CB2D0D2-FDB4-4025-B6F1-C536DDFAEA84}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>IngameScript</RootNamespace>
     <AssemblyName>ActionManager</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -40,15 +40,15 @@
   <ItemGroup>
     <Compile Include="Commands\BlockCommands\ConnectorCommands.cs" />
     <Compile Include="Commands\BlockCommands\DrillCommands.cs" />
-    <Compile Include="Commands\DelayCommand.cs" />
-    <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\BlockCommands\InventoryCommand.cs" />
-    <Compile Include="Commands\PrintCommand.cs" />
-    <Compile Include="Commands\SelfCommand.cs" />
-    <Compile Include="Commands\TerminalCommands.cs" />
     <Compile Include="Commands\BlockCommands\MergeCommands.cs" />
     <Compile Include="Commands\BlockCommands\PistonCommands.cs" />
     <Compile Include="Commands\BlockCommands\RotorCommands.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\DelayCommand.cs" />
+    <Compile Include="Commands\PrintCommand.cs" />
+    <Compile Include="Commands\SelfCommand.cs" />
+    <Compile Include="Commands\TerminalCommands.cs" />
     <Compile Include="MDK\Bootstrapper.cs" />
     <AdditionalFiles Include="MDK\MDK.options.props">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

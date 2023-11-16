@@ -5,11 +5,11 @@
     You can safely exclude this file from code repositories and use different 
     user settings per machine.
     -->
-    <MDKVersion>1.4.9</MDKVersion>
+    <MDKVersion>1.5.18</MDKVersion>
     <MDKUseGameBinPath>no</MDKUseGameBinPath>
-    <MDKGameBinPath>E:\Steam Library\SteamApps\common\SpaceEngineers\Bin64</MDKGameBinPath>
-    <MDKInstallPath>c:\users\seraj\appdata\local\microsoft\visualstudio\16.0_04cea5b9\extensions\5u0zb2xk.pbw</MDKInstallPath>
-    <MDKOutputPath>C:\Users\seraj\AppData\Roaming\SpaceEngineers\IngameScripts\local</MDKOutputPath>
+    <MDKGameBinPath>P:\SteamLibrary\SteamApps\common\SpaceEngineers\Bin64</MDKGameBinPath>
+    <MDKInstallPath>c:\users\sera\appdata\local\microsoft\visualstudio\17.0_83136dce\extensions\iw2xkzzn.hf0</MDKInstallPath>
+    <MDKOutputPath>C:\Users\Sera\AppData\Roaming\SpaceEngineers\IngameScripts\local</MDKOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Collections.Immutable">

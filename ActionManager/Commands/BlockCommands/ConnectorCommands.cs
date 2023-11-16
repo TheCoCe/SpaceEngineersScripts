@@ -124,7 +124,7 @@ namespace IngameScript
                         case ConnectorProperties.isparkingenabled:
                             return CheckProperty(block.IsParkingEnabled);
                         case ConnectorProperties.connectionallowed:
-                            return CheckProperty(block.CheckConnectionAllowed);
+                            return CheckProperty(block.Status == MyShipConnectorStatus.Connectable);
                         default:
                             return false;
                     }

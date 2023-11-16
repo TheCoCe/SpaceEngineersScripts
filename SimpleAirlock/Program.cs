@@ -76,7 +76,7 @@ namespace IngameScript
             IMySensorBlock _innerSensor;
             IMyTextPanel _textPanelInner;
             IMyTextPanel _textPanelOuter;
-            
+
             float timer;
             float currentTimerValue;
 
@@ -102,7 +102,7 @@ namespace IngameScript
 
             public void ActivateAirlock(AirlockState state)
             {
-                if(!Disabled && _currentAirlockState == AirlockState.None)
+                if (!Disabled && _currentAirlockState == AirlockState.None)
                 {
                     _currentAirlockState = state;
                     SetWorking();
@@ -122,7 +122,7 @@ namespace IngameScript
 
             public void Update(TimeSpan elapsedTime)
             {
-                if(!Disabled && _currentAirlockState != AirlockState.None)
+                if (!Disabled && _currentAirlockState != AirlockState.None)
                 {
                     currentTimerValue += (float)elapsedTime.TotalSeconds;
 
@@ -186,7 +186,7 @@ namespace IngameScript
                                     SetTimer(airlockMaxDepressurizationTimeS);
                                 }
                             }
-                            else if(CheckTimer())
+                            else if (CheckTimer())
                             {
                                 Reset();
                             }
@@ -194,7 +194,7 @@ namespace IngameScript
                         }
                     case AirlockStep.Pressure:
                         {
-                            if((depressurize ? _airlockVent.GetOxygenLevel() <= 0.0F : _airlockVent.GetOxygenLevel() >= 0.95F) || CheckTimer())
+                            if ((depressurize ? _airlockVent.GetOxygenLevel() <= 0.0F : _airlockVent.GetOxygenLevel() >= 0.95F) || CheckTimer())
                             {
                                 _airlockVent.Enabled = false;
                                 SwitchAirlockStep(AirlockStep.PrepareExit);
@@ -255,7 +255,7 @@ namespace IngameScript
             {
                 _currentAirlockState = AirlockState.Resetting;
 
-                if(_doorInner.Status != DoorStatus.Closed)
+                if (_doorInner.Status != DoorStatus.Closed)
                 {
                     _doorInner.Enabled = true;
                     _doorInner.CloseDoor();
@@ -270,17 +270,17 @@ namespace IngameScript
 
             void HandleReset()
             {
-                if(_doorInner.Status == DoorStatus.Closed)
+                if (_doorInner.Status == DoorStatus.Closed)
                 {
-                     _doorInner.Enabled = false;
+                    _doorInner.Enabled = false;
                 }
-                 
+
                 if (_doorOuter.Status == DoorStatus.Closed)
                 {
                     _doorOuter.Enabled = false;
                 }
 
-                if(_doorInner.Status == DoorStatus.Closed && _doorOuter.Status == DoorStatus.Closed)
+                if (_doorInner.Status == DoorStatus.Closed && _doorOuter.Status == DoorStatus.Closed)
                 {
                     _currentAirlockState = AirlockState.None;
                     SwitchAirlockStep(AirlockStep.Done, AirlockMessage.ready, AirlockMessage.ready);
@@ -321,12 +321,12 @@ namespace IngameScript
                 _doorInner.Enabled = true;
                 _doorOuter.Enabled = true;
 
-                if(_doorInner.Status != DoorStatus.Open)
+                if (_doorInner.Status != DoorStatus.Open)
                 {
                     _doorInner.OpenDoor();
                 }
 
-                if(_doorOuter.Status != DoorStatus.Open) 
+                if (_doorOuter.Status != DoorStatus.Open)
                 {
                     _doorOuter.OpenDoor();
                 }
@@ -337,7 +337,7 @@ namespace IngameScript
 
             public void ToggleDisable()
             {
-                if(Disabled)
+                if (Disabled)
                 {
                     Disabled = false;
                     Reset();
@@ -411,7 +411,7 @@ namespace IngameScript
                         var parameter = pA[0];
                         var value = pA[1];
 
-                        if(parameter.ToLower().Equals("name") && airlocks.ContainsKey(value))
+                        if (parameter.ToLower().Equals("name") && airlocks.ContainsKey(value))
                         {
                             break;
                         }
@@ -466,14 +466,14 @@ namespace IngameScript
                         continue;
                     }
 
-                    if(doorInner != null && doorOuter != null && airlockVent != null && innerSensor != null)
+                    if (doorInner != null && doorOuter != null && airlockVent != null && innerSensor != null)
                     {
                         Airlock airlock = new Airlock(airlockName, doorInner, doorOuter, airlockVent, innerSensor, textPanelInner, textPanelOuter, this);
                         airlocks.Add(airlockName, airlock);
                         Echo($"Successfully registered {airlockName}");
                     }
                 }
-                else 
+                else
                 {
                     Echo($"Airlocks need unique names. '{airlockName}' is a duplicate.");
                 }
@@ -486,27 +486,27 @@ namespace IngameScript
 
         public void Main(string argument, UpdateType updateSource)
         {
-            if(updateSource == UpdateType.Update10)
+            if (updateSource == UpdateType.Update10)
             {
                 foreach (var al in airlocks.Values)
                 {
-                    if(al._currentAirlockState != AirlockState.None)
+                    if (al._currentAirlockState != AirlockState.None)
                     {
                         al.Update(Runtime.TimeSinceLastRun);
                     }
                 }
             }
-            else if(_commandLine.TryParse(argument))
+            else if (_commandLine.TryParse(argument))
             {
                 Action commandAction;
 
                 string command = _commandLine.Argument(0);
 
-                if(command == null)
+                if (command == null)
                 {
                     Echo("No command specified!");
                 }
-                else if(_commands.TryGetValue(command, out commandAction))
+                else if (_commands.TryGetValue(command, out commandAction))
                 {
                     commandAction();
                 }
@@ -539,7 +539,7 @@ namespace IngameScript
 
         void ResetAirlock()
         {
-            if(_commandLine.Switch("all"))
+            if (_commandLine.Switch("all"))
             {
                 foreach (var airlock in airlocks)
                 {
@@ -569,7 +569,7 @@ namespace IngameScript
 
         void ToggleDisableAirlock()
         {
-            if(_commandLine.Switch("all"))
+            if (_commandLine.Switch("all"))
             {
                 foreach (var airlock in airlocks)
                 {
@@ -588,7 +588,7 @@ namespace IngameScript
             string message = _commandLine.Argument(all ? 1 : 2).ToLower();
 
             AirlockMessage airlockMessage = AirlockMessage.none;
-            if(!Enum.TryParse(message, out airlockMessage))
+            if (!Enum.TryParse(message, out airlockMessage))
             {
                 Echo("No valid message specified!");
                 return;
@@ -614,9 +614,9 @@ namespace IngameScript
         {
             Airlock airlock;
 
-            if(name == null)
+            if (name == null)
                 Echo("No Airlock specified");
-            else if(airlocks.TryGetValue(name, out airlock))
+            else if (airlocks.TryGetValue(name, out airlock))
                 return airlock;
             else
                 Echo($"{name} is not a valid airlock!");
